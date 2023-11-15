@@ -5,11 +5,8 @@ import pandas as pd
 ic = pd.read_csv("ice_cream.csv")
 ic.columns = ["person_id", "gender", "ice_cream_flavor", "video_game", "puzzle_game"]
 
-if 0 in ic.gender:
-    ic["gender"] = "Male"
-if 1 in ic.gender:
-    ic["gender"] = "Female"
-
+ic['gender'] = ic['gender'].replace({0: 'male', 1: 'female'})
+ic["ice_cream_flavor"] = ic["ice_cream_flavor"].replace({1: 'vanilla', 2: 'chocolate', 3: "strawberry"})
 icdf = pd.DataFrame(ic)
 
 print(tabulate(icdf, headers="keys", tablefmt="psql"))
