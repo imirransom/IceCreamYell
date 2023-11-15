@@ -29,9 +29,11 @@ def to_tabulate(df, format):
 to_tabulate(icdf.head(20), "psql")
 
 
-ic_by_gender = ic.groupby("gender").puzzle_game_score.mean()
 
-to_tabulate(ic_by_gender, "psql")
+ic_by_gender = ic.groupby("gender").puzzle_game_score.mean()
+icdf2 = pd.DataFrame(ic_by_gender)
+to_tabulate(icdf, "psql")
+to_tabulate(icdf2, "psql")
 
 # unpivot_ic = ic.groupby(["gender", "person_id"])["video_game_score"].mean().reset_index()
 #
