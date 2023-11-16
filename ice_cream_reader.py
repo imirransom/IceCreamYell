@@ -29,38 +29,34 @@ def to_tabulate(df, format):
 # print(tabulate(icdf.head(20), headers="keys", tablefmt="psql"))
 
 
-to_tabulate(icdf.head(20), "you_track")
+to_tabulate(ic.head(20), "psql")
 
 # This will group up the columns gender and game scores and show the average of how males and females differ
 print("-------------------------------------------------")
 print("\nAVERAGE PUZZLE GAME SCORE")
-puzzle_ic_by_gender = ic.groupby("gender").puzzle_game_score.mean()
-avg_puzzle_score = pd.DataFrame(puzzle_ic_by_gender)
-to_tabulate(avg_puzzle_score, "psql")
+puzzle_ic_by_gender = ic.groupby("gender").puzzle_game_score.mean().reset_index()
+
+to_tabulate(puzzle_ic_by_gender, "psql")
 print("-------------------------------------------------\n")
 
 print("AVERAGE VIDEO GAME SCORES")
-video_avg_by_gender = ic.groupby("gender").video_game_score.mean()
-avg_video_score = pd.DataFrame(video_avg_by_gender)
-to_tabulate(avg_video_score, "psql")
+video_avg_by_gender = ic.groupby("gender").video_game_score.mean().reset_index()
+to_tabulate(video_avg_by_gender, "psql")
 print("\n-------------------------------------------------")
 
 print("MINIMUM PUZZLE SCORES BASED ON GENDER AND ICE CREAM FLAVOR")
 min_ice_cream_by_gender = ic.groupby(["gender", "ice_cream_flavor"]).puzzle_game_score.min().reset_index()
-min_ice_cream = pd.DataFrame(min_ice_cream_by_gender)
-to_tabulate(min_ice_cream, "psql")
+to_tabulate(min_ice_cream_by_gender, "psql")
 
 print("\n-------------------------------------------------")
 print("MAXIMUM PUZZLE SCORES BASED ON GENDER AND ICE CREAM FLAVOR")
 max_ice_cream_by_gender = ic.groupby(["gender", "ice_cream_flavor"]).puzzle_game_score.max().reset_index()
-max_ice_cream = pd.DataFrame(max_ice_cream_by_gender)
-to_tabulate(max_ice_cream, "psql")
+to_tabulate(max_ice_cream_by_gender, "psql")
 
 print("\n-------------------------------------------------")
 print("AVERAGE PUZZLE SCORES BASED ON GENDER AND ICE CREAM FLAVOR")
 avg_ice_cream_by_gender = ic.groupby(["gender", "ice_cream_flavor"]).puzzle_game_score.mean().reset_index()
-avg_ice_cream = pd.DataFrame(avg_ice_cream_by_gender)
-to_tabulate(avg_ice_cream, "psql")
+to_tabulate(avg_ice_cream_by_gender, "psql")
 
 pivoted_average_ice_score = avg_ice_cream_by_gender.pivot(
     columns="ice_cream_flavor",
@@ -69,7 +65,7 @@ pivoted_average_ice_score = avg_ice_cream_by_gender.pivot(
 )
 print("\n-------------------------------------------------")
 print("PIVOTED TABLE SHOWING AVERAGE PUZZLE GAME SCORES BASED ON ICE CREAM AND GENDER")
-to_tabulate(pivoted_average_ice_score, "psql")
+to_tabulate(pivoted_average_ice_score.reset_index(), "psql")
 
 
 # unpivot_ic = ic.groupby(["gender", "person_id"])["video_game_score"].mean().reset_index()
